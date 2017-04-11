@@ -21,7 +21,6 @@ printIt(thisisnull){
   while (i < checkedLines.length){
     switch(checkedLines[i].substring(0, 5)){
       case "NORM:":
-        print("normal found");
         sortedLines.add(checkedLines[i]);
         break;
       case "PROP:":
@@ -31,7 +30,6 @@ printIt(thisisnull){
     }
     i++;
   }
-  print(checkedLines);
   reconstructCSS();
 }
 
@@ -48,6 +46,7 @@ void sortProperties(){
   for (var property in allProperties){
     sortedLines.add(property);
   }
+  allProperties.clear();
 }
 
 getAllPropertiesInCurrentSelector() {
