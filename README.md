@@ -1,2 +1,3 @@
 # AlphaCSS
-A project for organizing your css code. This tool will soon be able to format your code and sort your properties alphabetically.
+A small tool to order your css properties alphabetically.
+More functionalities like formatting and vertical arrangement are coming soon.
