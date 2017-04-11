@@ -14,10 +14,10 @@ main() {
     .openRead()
     .transform(UTF8.decoder)
     .transform(new LineSplitter())
-    .forEach((line) => identifyLineType(line)).then(printIt);
+    .forEach((line) => identifyLineType(line)).then(performActionBasedOnType);
 }
 
-printIt(thisisnull){
+performActionBasedOnType(thisisnull){
   while (i < checkedLines.length){
     switch(checkedLines[i].substring(0, 5)){
       case "NORM:":
