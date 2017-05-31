@@ -7,73 +7,102 @@ class Token {
   Token(this.identifier, this.value);
 }
 
+List<Token> tokens = [];
 int i = 0;
 
 void main() {
-  var path = "C:/Users/User/Desktop/Datein/AlphaCSS/bin/samplecss.txt";
+  String rootPath = "C:/Users/User/Desktop/Datein/AlphaCSS/bin/";
+  String originalFilePath = "samplecss.css";
 
-  new File(path).readAsString().then((String file) {
+  new File(rootPath + originalFilePath).readAsString().then((String file) {
     List<Token> tokens = getTokensFromFile(file);
     List<Token> sortedTokens = getSortedTokens(tokens);
-    for (var x in sortedTokens){
-      print("${x.identifier} ${x.value}");
-    }
+    new File(rootPath + "newcss.txt").writeAsStringSync(reconstructCSS(sortedTokens));
   });
 }
 
-bool isValidAccessor(String char){
-  RegExp regex = new RegExp(r"[a-zA-Z0-9#.]");
-  return (regex.hasMatch(char)) ? true : false;
-}
-
 List<Token> getTokensFromFile(file){
-  List<Token> tokens = [];
   String value = "";
   while (i < file.length-1){
     value = "";
-    if (isValidAccessor(file[i])){
-      while (file[i] != "{" && file[i] != ";"){
-        value += file[i];
-        i++;
-      }
-      if (file[i] == "{"){
-        tokens.add(new Token("ACCESSOR", value));
-      }
-      else {
-        tokens.add(new Token("PROPERTY", value));
-      }
+    if (isValidSelector(file[i])){
+      value = getTokenContent(file);
+      addTokenBasedOnType(file[i], value);
     }
     i++;
   }
   return tokens;
 }
 
-void reconstructCSS() {
-
+bool isValidSelector(String char){
+  RegExp regex = new RegExp(r"[a-zA-Z0-9#.]");
+  return (regex.hasMatch(char)) ? true : false;
 }
+
+String getTokenContent(String file){
+  String content = "";
+  while (file[i] != "{" && file[i] != ";"){
+    content += file[i];
+    i++;
+  }
+  return content;
+}
+
+void addTokenBasedOnType(String char, String value){
+  if (char == "{"){
+    tokens.add(new Token("SELECTOR", value));
+  }
+  else {
+    tokens.add(new Token("PROPERTY", value));
+  }
+}
+
+int iSort = 0;
 
 List<Token> getSortedTokens(tokens){
   List<Token> sortedTokens = [];
-  i = 0;
   try {
-    while (i < tokens.length-1){
-      if (tokens[i].identifier == "PROPERTY"){
-        List<Token> toSort = [];
-        while (tokens[i].identifier == "PROPERTY"){
-          toSort.add(tokens[i]);
-          i++;
-        }
+    while (iSort < tokens.length-1){
+      if (tokens[iSort].identifier == "PROPERTY"){
+        List<Token> toSort = getAllPropertiesInSelector();
+        iSort--;
         toSort.sort((current, next) => current.value.compareTo(next.value));
         for (var elem in toSort){
           sortedTokens.add(elem);
         }
       }
-      else if (tokens[i].identifier == "ACCESSOR"){
-        sortedTokens.add(tokens[i]);
+      else if (tokens[iSort].identifier == "SELECTOR"){
+        sortedTokens.add(tokens[iSort]);
       }
-      i++;
+      iSort++;
     }
   }
-  catch(ex) {}
+  catch(ex) { }
   return sortedTokens;
+}
+
+List<Token> getAllPropertiesInSelector(){
+  List<Token> properties = [];
+  try {
+    while (tokens[iSort].identifier == "PROPERTY"){
+      properties.add(tokens[iSort]);
+      iSort++;
+    }
+  }
+  catch(ex) { };
+  return properties;
+}
+
+String reconstructCSS(List<Token> sortedTokens) {
+  String finalString = "";
+
+  for (var elem in sortedTokens){
+    if (elem.identifier == "SELECTOR"){
+      finalString += "${elem.value}{\n";
+    }
+    else if (elem.identifier == "PROPERTY"){
+      finalString += "  ${elem.value};\n";
+    }
+  }
+  return finalString;
 }

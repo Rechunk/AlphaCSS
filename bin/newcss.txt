@@ -1,11 +1,8 @@
-h5 {
+h1 {
   border: 2px solid black;
+  color: red;
   z-index: 5;
-  color: red;
-}
-
-h4 {
-  z-index: 7;
-  color: red;
+h2 {
   border: 2px;
-}
+  color: red;
+  z-index: 7;
