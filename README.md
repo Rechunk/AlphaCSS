@@ -1,3 +1,23 @@
 # AlphaCSS
-A small tool to order your css properties alphabetically.
-More functionality like formatting and vertical arrangement is coming soon.
+A small tool to refactor your css files. Currently, it reformats your code and orders your properties alphabetically.
+
+To be added:
+
+ - Dynamic file options (IO)
+ - Minification
+ - Dead Code removal
+
+### Turn:
+
+```
+h1{z-index: 4; color:red;}
+```
+
+### Into:
+
+```
+h1 {
+  color: red;
+  z-index: 4;
+}
+```
