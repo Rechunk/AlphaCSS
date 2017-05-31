@@ -1,11 +1,4 @@
-h1 {
-  border: 2px solid black;
-  z-index: 5;
+h3 {
   color: red;
-}
-
-h2 {
-  z-index: 7;
-  color: red;
-  border: 2px;
+  color: blue;
 }

@@ -8,7 +8,6 @@ class Token {
 }
 
 List<Token> tokens = [];
-int i = 0;
 
 void main() {
   String rootPath = "C:/Users/User/Desktop/Datein/AlphaCSS/bin/";
@@ -20,6 +19,8 @@ void main() {
     new File(rootPath + "newcss.txt").writeAsStringSync(reconstructCSS(sortedTokens));
   });
 }
+
+int i = 0;
 
 List<Token> getTokensFromFile(file){
   String value = "";
@@ -62,7 +63,7 @@ int iSort = 0;
 List<Token> getSortedTokens(tokens){
   List<Token> sortedTokens = [];
   try {
-    while (iSort < tokens.length-1){
+    while (iSort < tokens.length){
       if (tokens[iSort].identifier == "PROPERTY"){
         List<Token> toSort = getAllPropertiesInSelector();
         iSort--;
