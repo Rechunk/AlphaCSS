@@ -6,11 +6,15 @@ To be added:
  - Dynamic file options (IO)
  - Minification
  - Dead Code removal
+ 
+Bugs to fix:
+
+  - Preserve order if a shorthand property is combined with the written out version
 
 ### Turn:
 
 ```
-h1{z-index: 4; color:red;}
+h1{z-index: 4; color:red; }
 ```
 
 ### Into:
