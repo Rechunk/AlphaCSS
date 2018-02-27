@@ -1,6 +1,8 @@
 # AlphaCSS
 A small tool to refactor your css files. Currently, it reformats your code and orders your properties alphabetically.
 
+Warning: not meant for development use, as through changing the order of the properties the visuals could be affected
+
 To be added:
 
  - Dynamic file options (IO)
